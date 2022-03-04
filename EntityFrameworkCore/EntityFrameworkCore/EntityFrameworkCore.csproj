@@ -4,7 +4,7 @@
     <Authors>Meyer</Authors>
     <Description>EntityFrameworkCore extensions</Description>
     <Copyright>Copyright 2022</Copyright>
-    <ProjectUrl>https://github.com/meyer-common/EntityFrameworkCore</ProjectUrl>
+    <RepositoryUrl>https://github.com/meyer-common/EntityFrameworkCore</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <TargetFramework>net6.0</TargetFramework>
     <Version>1.0.0</Version>
