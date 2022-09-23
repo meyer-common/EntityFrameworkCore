@@ -52,4 +52,9 @@ public class DbContextConnectionOptions
     /// Gets or sets whether the connection requires ssl
     /// </summary>
     public string SslMode { get; set; }
+
+    /// <summary>
+    /// Gets or sets the Schemas to search
+    /// </summary>
+    public string SearchPath { get; set; }
 }

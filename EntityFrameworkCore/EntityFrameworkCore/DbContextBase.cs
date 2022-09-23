@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Meyer.Common.EntityFrameworkCore;
 
 /// <inheritdoc/>
-public class DbContextBase : DbContext
+public abstract class DbContextBase : DbContext
 {
     private static readonly HashSet<(Type CrlType, string PgTypeName)> mappings = new();
 
@@ -86,8 +86,29 @@ public class DbContextBase : DbContext
     /// </returns>
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return ChangeTracker.QueryTrackingBehavior == QueryTrackingBehavior.TrackAll || Database.IsInMemory()
-            ? await base.SaveChangesAsync(cancellationToken)
-            : throw new InvalidOperationException("This DBContext is read only.");
+        try
+        {
+            return ChangeTracker.QueryTrackingBehavior == QueryTrackingBehavior.TrackAll || Database.IsInMemory()
+                ? await base.SaveChangesAsync(cancellationToken)
+                : throw new InvalidOperationException("This DBContext is read only.");
+        }
+        catch (DbUpdateException e) when (e.InnerException is PostgresException)
+        {
+            var exception = e.InnerException as PostgresException;
+
+            switch (exception?.SqlState)
+            {
+                case PostgresErrorCodes.UniqueViolation:
+                    throw new ContextConstraintException(ConstraintViolationTypes.UniqueViolation, e.Message, e);
+                case PostgresErrorCodes.ForeignKeyViolation:
+                    throw new ContextConstraintException(ConstraintViolationTypes.ForeignKeyViolation, e.Message, e);
+                default:
+                    throw;
+            }
+        }
+        catch (DbUpdateConcurrencyException e)
+        {
+            throw new ContextConcurrencyException(e.Message, e);
+        }
     }
 }
