@@ -3,9 +3,9 @@ namespace Meyer.Common.EntityFrameworkCore;
 /// <summary>
 /// Represents application configuration for a database
 /// </summary>
-public class DbContextConnectionOptions
+public class DbConnectionOptions
 {
-    public const string SectionName = nameof(DbContextConnectionOptions);
+    public const string SectionName = nameof(DbConnectionOptions);
 
     /// <summary>
     /// Gets or sets the host address of a read-only instance

@@ -5,7 +5,7 @@ namespace Meyer.Common.EntityFrameworkCore;
 
 public static class DbConnectionFactory
 {
-    public static NpgsqlConnectionStringBuilder GetConnectionStringBuilder(DbContextConnectionOptions connectionOptions, DatabaseAccess databaseAccess)
+    public static NpgsqlConnectionStringBuilder GetConnectionStringBuilder(DbConnectionOptions connectionOptions, DatabaseAccess databaseAccess)
     {
         return new NpgsqlConnectionStringBuilder
         {
