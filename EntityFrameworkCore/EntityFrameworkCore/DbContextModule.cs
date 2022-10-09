@@ -18,8 +18,8 @@ public static class DbContextModule
             .AddDbContextFactory<T>(x => { }, ServiceLifetime.Scoped);
     }
 
-    public static IServiceCollection AddSingleTenantDbContextPool<T>(this IServiceCollection services) where T : DbContextBase
+    public static IServiceCollection AddSingleTenantDbContext<T>(this IServiceCollection services) where T : DbContextBase
     {
-        return services.AddDbContextPool<T>(x => { });
+        return services.AddDbContext<T>();
     }
 }
