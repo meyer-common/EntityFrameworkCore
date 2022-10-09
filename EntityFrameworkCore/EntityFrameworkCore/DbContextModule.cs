@@ -17,9 +17,4 @@ public static class DbContextModule
             .AddScoped<IMultiTenantDbContextFactory<T>, MultiTenantDbContextFactory<T>>()
             .AddDbContextFactory<T>(x => { }, ServiceLifetime.Scoped);
     }
-
-    public static IServiceCollection AddSingleTenantDbContext<T>(this IServiceCollection services) where T : DbContextBase
-    {
-        return services.AddDbContext<T>();
-    }
 }
